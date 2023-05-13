@@ -1,6 +1,8 @@
 import requests
-
 from task1.utils import degree_sign, give_info_for_city
+from dotenv import dotenv_values
+
+env_vars = dotenv_values(".env")
 
 
 def get_coldest_city(cities: list):
@@ -13,7 +15,7 @@ def get_avg_temperature(cities: list):
 
 
 def call_weather_service(city_name: str):
-    api_key = "3ddc6979e99d04fad2ca483074419d39"
+    api_key = env_vars["API_KEY"]
     base_url = "https://api.openweathermap.org/data/2.5/weather"
     params = {
         "q": city_name,

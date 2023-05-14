@@ -43,7 +43,7 @@ def weather_in_cities(cities: list):
             give_info_for_city(city, weather_condition, temperature, humidity)
 
     print(f"The coldest city is {get_coldest_city(cities)}")
-    print(f"The average temperature for all the cities is {get_avg_temperature(cities):.2f}{degree_sign}")
+    print(f"The average temperature for all the cities is {get_avg_temperature(cities):.2f}{degree_sign}C")
 
 
 def get_weather_for_city_from_input():

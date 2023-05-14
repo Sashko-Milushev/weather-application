@@ -8,7 +8,7 @@ city_labels = []
 cities = ["Sofia", "Varna", "Rome", "Naples", "Paris", "Nantes", "Madrid", "Barcelona", "New York", "Louisiana"]
 
 
-def update_weather_info(city_label, city_name):
+def update_weather_info(city_label, city_name: str):
     weather_data = call_weather_service(city_name)
 
     if weather_data is not None:
@@ -73,7 +73,8 @@ result_text = tk.StringVar()
 
 result_label = tk.Label(window, textvariable=result_text)
 result_label.pack()
-# !!!!! Press the green button in the gutter to run the script
 
 if __name__ == '__main__':
     window.mainloop()
+
+# !!!!! Press the green button in the gutter to run the script

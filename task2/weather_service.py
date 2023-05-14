@@ -1,5 +1,4 @@
 import requests
-from task2.utils import degree_sign
 from dotenv import dotenv_values
 
 env_vars = dotenv_values("../.env")
@@ -26,24 +25,5 @@ def call_weather_service(city_name: str):
     if response.status_code == 200:
         data = response.json()
         return data
-    elif response.status_code == 404:
-        print(f"{city_name} not found. Please enter valid city name.")
-    else:
-        print("Ooops...an error occurred. We are sorry. Try again.")
+
     return None
-
-
-def weather_in_cities(cities: list):
-    for city in cities:
-        data = call_weather_service(city)
-        if data is not None:
-            weather_condition = data["weather"][0]["description"]
-            temperature = data["main"]["temp"]
-            humidity = data["main"]["humidity"]
-            give_info_for_city(city, weather_condition, temperature, humidity)
-
-    print(f"The coldest city is {get_coldest_city(cities)}")
-    print(f"The average temperature for all the cities is {get_avg_temperature(cities):.2f}{degree_sign}")
-
-
-

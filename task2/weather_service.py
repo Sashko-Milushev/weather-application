@@ -1,5 +1,5 @@
 import requests
-from task1.utils import degree_sign, give_info_for_city
+from task2.utils import degree_sign
 from dotenv import dotenv_values
 
 env_vars = dotenv_values("../.env")
@@ -46,13 +46,4 @@ def weather_in_cities(cities: list):
     print(f"The average temperature for all the cities is {get_avg_temperature(cities):.2f}{degree_sign}")
 
 
-def get_weather_for_city_from_input():
-    print("Do you want to check the weather in a specific city?")
-    print("Just type a name of city you are interested in:")
-    city_to_check = input()
-    data = call_weather_service(city_to_check)
-    if data is not None:
-        weather_condition = data["weather"][0]["description"]
-        temperature = data["main"]["temp"]
-        humidity = data["main"]["humidity"]
-        give_info_for_city(city_to_check, weather_condition, temperature, humidity)
+

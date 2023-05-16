@@ -1,5 +1,4 @@
 import requests
-from flask import jsonify
 
 from dotenv import dotenv_values
 

@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 
-from utils import get_5_random_cities
+from utils import get_5_random_cities, get_coldest_city, get_avg_temperature
 from weather_service import get_weather_for_5_random_cities, call_weather_service
 
 app = Flask(__name__)
 
-cities = ["Sofia", "Varna", "Rome", "Naples", "Paris", "Metz", "Madrid", "Barcelona", "New York", "Louisiana"]
+cities = ["Sofia", "Varna", "Rome", "Naples",
+          "Paris", "Metz", "Madrid", "Barcelona",
+          "New York", "Louisiana"]
+
 background_images = {
     'clear sky': '/static/images/sun.jpg',
     'few clouds': '/static/images/clouds.jpg',
@@ -25,13 +28,19 @@ background_images = {
 @app.route('/home', methods=['GET'])
 def load_home():
     current_5_cities = get_5_random_cities(cities)
+
     weather_data = get_weather_for_5_random_cities(current_5_cities)
+    coldest_city = get_coldest_city(current_5_cities)
+    avg_temperature = get_avg_temperature(current_5_cities)
 
     for data in weather_data:
         description = data['description'].lower()
         data['background_image'] = background_images.get(description, '/static/images/default.jpg')
 
-    return render_template('base.html', weather_data=weather_data)
+    return render_template('base.html',
+                           weather_data=weather_data,
+                           coldest_city=coldest_city,
+                           avg_temperature=avg_temperature)
 
 
 @app.route('/search', methods=['GET'])

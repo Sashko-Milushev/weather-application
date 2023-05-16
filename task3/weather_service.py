@@ -42,4 +42,4 @@ def get_weather_for_5_random_cities(cities: list):
         else:
             weather_info_for_cities.append({'error': 'Ooops...an error occurred. We are sorry. Try again.'})
 
-    return jsonify(weather_info_for_cities), 200
+    return weather_info_for_cities

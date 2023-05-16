@@ -11,7 +11,8 @@ cities = ["Sofia", "Varna", "Rome", "Naples", "Paris", "Nantes", "Madrid", "Barc
 @app.route('/home')
 def load_home():
     current_5_cities = get_5_random_cities(cities)
-    return render_template('base.html')
+    weather_data = get_weather_for_5_random_cities(current_5_cities)
+    return render_template('base.html', weather_data=weather_data)
 
 
 if __name__ == '__main__':

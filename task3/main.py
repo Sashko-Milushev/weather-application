@@ -21,6 +21,7 @@ def load_home():
         'broken clouds': '/static/images/clouds.jpg',
         'shower rain': '/static/images/rain.jpg',
         'rain': '/static/images/rain.jpg',
+        'light intensity drizzle': '/static/images/rain.jpg',
         'thunderstorm': '/static/images/thunderstorm.jpg',
         'snow': '/static/images/snow.jpg',
         'mist': '/static/images/mist.jpg',

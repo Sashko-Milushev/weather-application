@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h1 class="text-center">Weather App</h1>
-    <div class="weather-container row justify-content-center">
+    <div class="row justify-content-center weather-container">
         {% for city in weather_data %}
         <div class="col-sm-2">
             <div class="weather-card-wrapper">
@@ -24,8 +24,21 @@
         </div>
         {% endfor %}
     </div>
-</div>
 
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <h2 class="text-center">Check the weather for your city</h2>
+            <form action="/search" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="city" placeholder="Enter city name" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

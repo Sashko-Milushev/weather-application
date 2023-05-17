@@ -11,18 +11,18 @@
 
     <div class="row justify-content-center weather-container">
         {% for city in weather_data %}
-        <div class="col-sm-2">
-            <div class="weather-card-wrapper">
-                <div class="weather-card" style="background-image: url('{{ city.background_image }}');">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ city.city }}</h5>
-                        <p class="card-text">Temperature: {{ city.temperature }}°C</p>
-                        <p class="card-text">Weather: {{ city.description }}</p>
-                        <p class="card-text">Humidity: {{ city.humidity }}%</p>
+            <div class="col-sm-2">
+                <div class="weather-card-wrapper">
+                    <div class="weather-card" style="background-image: url('{{ city.background_image }}');">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ city.city }}</h5>
+                            <p class="card-text">Temperature: {{ city.temperature }}°C</p>
+                            <p class="card-text">Weather: {{ city.description }}</p>
+                            <p class="card-text">Humidity: {{ city.humidity }}%</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
 
         <h6>Coldest City: {{ coldest_city }} | Average Temperature: {{ avg_temperature }}°C</h6>
@@ -32,7 +32,8 @@
     <div class="row justify-content-center">
         <div class="col-sm-6">
             <h2 class="text-center">Check the weather for your city</h2>
-            <form id="search-form" action="/" method="POST">
+            <form id="search-form" action="{% url 'search' %}" method="GET">
+                {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="city" placeholder="Enter city name" required>
                     <div class="input-group-append">
@@ -40,9 +41,10 @@
                     </div>
                 </div>
             </form>
+
             <div id="searched-city-info" class="mt-4"></div>
             {% if error_message %}
-            <p class="text-center text-danger">{{ error_message }}</p>
+                <p class="text-center text-danger">{{ error_message }}</p>
             {% endif %}
         </div>
     </div>

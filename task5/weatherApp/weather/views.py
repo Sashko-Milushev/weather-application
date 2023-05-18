@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core import serializers
 
 from .utils import get_5_random_cities, get_coldest_city, get_avg_temperature, background_images, \
     get_last_10_weather_records
@@ -30,10 +31,12 @@ def search(request):
         city = request.GET.get('city')
         data, status_code = call_weather_service(city)
         last_10_records = get_last_10_weather_records(city)
+        last_10_records_data = serializers.serialize('python', last_10_records)
+        last_10_records_data = [record['fields'] for record in last_10_records_data]
 
         description = data['description'].lower()
         data['background_image'] = background_images.get(description, '/static/images/default.jpg')
-        data['last_10_records'] = last_10_records
+        data['last_10_records'] = last_10_records_data
 
         if status_code == 200:
             return JsonResponse(data)

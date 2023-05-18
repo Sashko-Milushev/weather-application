@@ -1,5 +1,6 @@
 import random
 
+from .models import WeatherForCity
 from .weather_service import call_weather_service
 
 cities = ["Sofia", "Varna", "Rome", "Naples",
@@ -22,6 +23,7 @@ background_images = {
     'fog': '/static/images/mist.jpg'
 }
 
+
 def get_5_random_cities():
     return random.sample(cities, 5)
 
@@ -34,3 +36,8 @@ def get_avg_temperature(cities: list):
     temperatures = [call_weather_service(city)[0]["temperature"] for city in cities]
     avg_temp = sum(temperatures) / len(temperatures)
     return f'{avg_temp:.2f}'
+
+
+def get_last_10_weather_records(city_name):
+    weather_records = WeatherForCity.objects.filter(name=city_name).order_by('-timestamp')[:10]
+    return weather_records

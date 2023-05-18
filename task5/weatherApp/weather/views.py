@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
-from .utils import get_5_random_cities, get_coldest_city, get_avg_temperature, background_images
+from .utils import get_5_random_cities, get_coldest_city, get_avg_temperature, background_images, \
+    get_last_10_weather_records
 from .weather_service import get_weather_for_5_random_cities, call_weather_service
 
 
@@ -23,16 +25,15 @@ def home(request):
     return render(request, 'weather/weather.html', context)
 
 
-from django.http import JsonResponse
-
-
 def search(request):
     if request.method == 'GET':
         city = request.GET.get('city')
         data, status_code = call_weather_service(city)
+        last_10_records = get_last_10_weather_records(city)
 
         description = data['description'].lower()
         data['background_image'] = background_images.get(description, '/static/images/default.jpg')
+        data['last_10_records'] = last_10_records
 
         if status_code == 200:
             return JsonResponse(data)

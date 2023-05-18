@@ -7,6 +7,7 @@ class WeatherForCity(models.Model):
     humidity = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.CharField(max_length=200)
     background_image = models.CharField(max_length=200)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     IMAGE_MAPPING = {
         'clear sky': 'images/sun.jpg',

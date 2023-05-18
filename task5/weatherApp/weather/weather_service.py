@@ -1,6 +1,8 @@
 import requests
 from dotenv import dotenv_values
 
+from .models import WeatherForCity
+
 env_vars = dotenv_values("../../.env")
 
 
@@ -21,6 +23,16 @@ def call_weather_service(city_name: str):
             "description": data["weather"][0]["description"],
             "humidity": data["main"]["humidity"]
         }
+
+        # Create a new WeatherForCity instance and save it
+        weather_instance = WeatherForCity(
+            name=weather_info["city"],
+            temperature=weather_info["temperature"],
+            humidity=weather_info["humidity"],
+            description=weather_info["description"]
+        )
+        weather_instance.save()
+
         return weather_info, 200
 
     elif response.status_code == 404:

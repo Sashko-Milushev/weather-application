@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('search-form');
     const searchedCityInfo = document.getElementById('searched-city-info');
@@ -6,16 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const cityInput = document.querySelector('input[name="city"]');
         const city = cityInput.value;
+        const searchURL = '/search/';
 
-        const response = await fetch(`/search?city=${city}`);
+        const response = await fetch(`${searchURL}?city=${city}`);
         const data = await response.json();
+        console.log(data)
 
         if (response.ok) {
+
             const newSection = document.createElement('div');
             newSection.classList.add('row', 'justify-content-center');
 
             const cardCol = document.createElement('div');
-            cardCol.classList.add('col-sm-2', 'd-flex', 'justify-content-center'); // Add 'd-flex' and 'justify-content-center' classes
+            cardCol.classList.add('col-sm-2', 'd-flex', 'justify-content-center');
 
             const cardWrapper = document.createElement('div');
             cardWrapper.classList.add('weather-card-wrapper', 'mx-auto');
@@ -23,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.classList.add('searched-card');
             card.style.backgroundImage = `url('${data.background_image}')`;
+            console.log(data.background_image)
 
             const cardBody = document.createElement('div');
             cardBody.classList.add('card-body');
@@ -34,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const temperature = document.createElement('p');
             temperature.classList.add('card-text');
             temperature.textContent = `Temperature: ${data.temperature}°C`;
+            console.log(data.temperature)
 
             const weather = document.createElement('p');
             weather.classList.add('card-text');
@@ -53,8 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cardCol.appendChild(cardWrapper);
             newSection.appendChild(cardCol);
 
+
             searchedCityInfo.innerHTML = '';
             searchedCityInfo.appendChild(newSection);
+            console.log('Into block')
         } else {
             const error_message = data.error || 'An error occurred. Please try again.';
             searchedCityInfo.innerHTML = `<p class="text-center text-danger">${error_message}</p>`;

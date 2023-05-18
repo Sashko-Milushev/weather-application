@@ -41,5 +41,3 @@ def get_weather_for_5_random_cities(cities: list):
             weather_info_for_cities.append({'error': 'Ooops...an error occurred. We are sorry. Try again.'})
 
     return weather_info_for_cities
-
-

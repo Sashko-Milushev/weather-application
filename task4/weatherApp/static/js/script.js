@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const response = await fetch(`${searchURL}?city=${city}`);
         const data = await response.json();
-        console.log(data)
 
         if (response.ok) {
 
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.classList.add('searched-card');
             card.style.backgroundImage = `url('${data.background_image}')`;
-            console.log(data.background_image)
 
             const cardBody = document.createElement('div');
             cardBody.classList.add('card-body');
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const temperature = document.createElement('p');
             temperature.classList.add('card-text');
             temperature.textContent = `Temperature: ${data.temperature}°C`;
-            console.log(data.temperature)
 
             const weather = document.createElement('p');
             weather.classList.add('card-text');
@@ -63,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             searchedCityInfo.innerHTML = '';
             searchedCityInfo.appendChild(newSection);
-            console.log('Into block')
+
         } else {
             const error_message = data.error || 'An error occurred. Please try again.';
             searchedCityInfo.innerHTML = `<p class="text-center text-danger">${error_message}</p>`;

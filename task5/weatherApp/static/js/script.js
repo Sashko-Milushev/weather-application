@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('search-form');
     const searchedCityInfo = document.getElementById('searched-city-info');
@@ -14,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
 
         if (response.ok) {
-
             const newSection = document.createElement('div');
             newSection.classList.add('row', 'justify-content-center');
 
@@ -57,10 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
             cardCol.appendChild(cardWrapper);
             newSection.appendChild(cardCol);
 
-
             searchedCityInfo.innerHTML = '';
             searchedCityInfo.appendChild(newSection);
 
+            if (data.last_10_records) {
+                const recordsSection = document.createElement('div');
+                recordsSection.classList.add('row', 'justify-content-center');
+
+                const recordsCol = document.createElement('div');
+                recordsCol.classList.add('col-sm-6');
+
+                const recordsTitle = document.createElement('h5');
+                recordsTitle.textContent = 'Last 10 Records';
+
+                const recordsList = document.createElement('ul');
+                recordsList.classList.add('list-group');
+
+                for (const record of data.last_10_records) {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item');
+
+                    const dateTime = new Date(record.timestamp); // Convert timestamp to Date object
+                    const formattedDateTime = dateTime.toLocaleString(); // Format the date and time
+
+                    listItem.textContent = `Date: ${formattedDateTime}, Temperature: ${record.temperature}°C, Weather: ${record.description}, Humidity: ${record.humidity}%`;
+                    recordsList.appendChild(listItem);
+                }
+
+                recordsCol.appendChild(recordsTitle);
+                recordsCol.appendChild(recordsList);
+                recordsSection.appendChild(recordsCol);
+
+                searchedCityInfo.appendChild(recordsSection);
+            }
         } else {
             const error_message = data.error || 'An error occurred. Please try again.';
             searchedCityInfo.innerHTML = `<p class="text-center text-danger">${error_message}</p>`;

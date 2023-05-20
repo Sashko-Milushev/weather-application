@@ -1,11 +1,12 @@
 import random
 
+import requests
+from dotenv import dotenv_values
+
 from .models import WeatherForCity
 from .weather_service import call_weather_service
 
-cities = ["Sofia", "Varna", "Rome", "Naples",
-          "Paris", "Metz", "Madrid", "Barcelona",
-          "New York", "Louisiana"]
+env_vars = dotenv_values("../../.env")
 
 background_images = {
     'clear sky': '/static/images/sun.jpg',
@@ -20,12 +21,25 @@ background_images = {
     'thunderstorm': '/static/images/thunderstorm.jpg',
     'snow': '/static/images/snow.jpg',
     'mist': '/static/images/mist.jpg',
-    'fog': '/static/images/mist.jpg'
+    'fog': '/static/images/mist.jpg',
+    'haze': '/static/images/mist.jpg',
+
 }
 
 
 def get_5_random_cities():
-    return random.sample(cities, 5)
+    username = 'corewin'
+    url = f"http://api.geonames.org/citiesJSON?north=90&south=-90&east=180&west=-180&lang=en&username={username}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        cities = [result['name'] for result in data['geonames']]
+        random_cities = random.sample(cities, 5)
+        return random_cities
+    else:
+        print('Error occurred!')
+        return []
 
 
 def get_coldest_city(cities: list):
